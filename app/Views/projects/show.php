@@ -132,6 +132,11 @@
             Voir les updates
         </a>
 
+        <a href="<?php echo BASE_URL; ?>/projects/<?php echo (int) $project['id']; ?>/decisions"
+       class="inline-flex rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700">
+            📋 Voir les décisions
+        </a>
+
         <a href="<?php echo BASE_URL; ?>/projects/<?php echo (int) $project['id']; ?>/edit"
         class="inline-flex rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-amber-600">
             Modifier le projet

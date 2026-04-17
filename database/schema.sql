@@ -73,3 +73,46 @@ CREATE TABLE media (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
+
+-- =============================================
+-- Decisions module
+-- =============================================
+
+CREATE TABLE decisions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    status ENUM('draft','pending','approved','rejected','cancelled') NOT NULL DEFAULT 'draft',
+    response_comment TEXT NULL,
+    validated_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_decisions_project
+        FOREIGN KEY (project_id) REFERENCES projects(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_decisions_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    INDEX idx_decisions_project_status (project_id, status)
+);
+
+CREATE TABLE decision_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    decision_id INT NOT NULL,
+    user_id INT NOT NULL,
+    from_status VARCHAR(20) NOT NULL,
+    to_status VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_logs_decision
+        FOREIGN KEY (decision_id) REFERENCES decisions(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_logs_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    INDEX idx_logs_decision (decision_id, created_at)
+);

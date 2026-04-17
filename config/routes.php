@@ -27,3 +27,17 @@ $router->post('/logout', [AuthController::class, 'logout']);
 $router->get('/account', [AuthController::class, 'account']);
 
 $router->post('/media/store', [MediaController::class, 'store']);
+
+
+
+
+// Routes pour les décisions
+$router->get('/projects/{id}/decisions', [DecisionController::class, 'index']);
+$router->get('/projects/{id}/decisions/create', [DecisionController::class, 'create']);
+$router->post('/projects/{id}/decisions/store', [DecisionController::class, 'store']);
+$router->get('/decisions/{id}', [DecisionController::class, 'show']);
+$router->post('/decisions/{id}/submit', [DecisionController::class, 'submit']);
+$router->post('/decisions/{id}/approve', [DecisionController::class, 'approve']);
+$router->post('/decisions/{id}/reject', [DecisionController::class, 'reject']);
+$router->post('/decisions/{id}/cancel', [DecisionController::class, 'cancel']);
+$router->post('/decisions/{id}/revise', [DecisionController::class, 'revise']);
